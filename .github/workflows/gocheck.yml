@@ -3,7 +3,7 @@ name: Go Code Checks
 on:
   push:
     branches:
-      - "*"
+      - "**"
 
 jobs:
   check-code:
