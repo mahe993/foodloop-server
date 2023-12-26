@@ -11,3 +11,38 @@ Other modules:
   - N.A.
 */
 package main
+
+import (
+	"log"
+	"net/http"
+	"time"
+
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/cors"
+)
+
+func main() {
+	r := chi.NewRouter()
+
+	// Basic CORS
+	r.Use(cors.Handler(cors.Options{
+		// TODO: change example.com to FE domain once deployed
+		AllowedOrigins:   []string{"http://www.example.com"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"*"},
+		AllowCredentials: false,
+	}))
+
+	// middlewares
+	r.Use(middleware.Logger)
+	r.Use(middleware.Recoverer)
+
+	// Sets a timeout value on the request context (ctx), that will signal
+	// through ctx.Done() that the request has timed out and further
+	// processing should be stopped.
+	r.Use(middleware.Timeout(10 * time.Second))
+
+	log.Println("Starting server on port 8080")
+	log.Fatal(http.ListenAndServe(":8080", r))
+}
