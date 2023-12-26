@@ -13,6 +13,7 @@ Other modules:
 package main
 
 import (
+	"foodloop/src/routers"
 	"log"
 	"net/http"
 	"time"
@@ -20,6 +21,11 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
+	"github.com/go-chi/render"
+)
+
+const (
+	basePath = "/api/v1"
 )
 
 func main() {
@@ -37,11 +43,14 @@ func main() {
 	// middlewares
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
-
+	r.Use(render.SetContentType(render.ContentTypeJSON))
 	// Sets a timeout value on the request context (ctx), that will signal
 	// through ctx.Done() that the request has timed out and further
 	// processing should be stopped.
 	r.Use(middleware.Timeout(10 * time.Second))
+
+	// mount routes
+	r.Mount(basePath+"/example", routers.Example.Router())
 
 	log.Println("Starting server on port 8080")
 	log.Fatal(http.ListenAndServe(":8080", r))
