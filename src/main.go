@@ -51,6 +51,7 @@ func main() {
 
 	// mount routes
 	r.Mount(basePath+"/example", routers.Example.Router())
+	r.Mount(basePath+"/user", routers.User.Router())
 
 	log.Println("Starting server on port 8080")
 	log.Fatal(http.ListenAndServe(":8080", r))
