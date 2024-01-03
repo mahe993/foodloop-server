@@ -22,3 +22,6 @@ go.work
 
 #env files
 *.env
+
+#volume for local db data
+foodloop-data
