@@ -24,7 +24,6 @@ func (*UserRouter) Router() chi.Router {
 		r.Use(User.IDCtx)
 		r.Get("/", services.User.GetUser)
 	})
-
 	return r
 }
 

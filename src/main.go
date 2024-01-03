@@ -13,6 +13,7 @@ Other modules:
 package main
 
 import (
+	"foodloop/src/database"
 	"foodloop/src/routers"
 	"log"
 	"net/http"
@@ -28,13 +29,17 @@ const (
 	basePath = "/api/v1"
 )
 
+func init() {
+	database.InitDB()
+}
+
 func main() {
 	r := chi.NewRouter()
 
 	// Basic CORS
 	r.Use(cors.Handler(cors.Options{
 		// TODO: change example.com to FE domain once deployed
-		AllowedOrigins:   []string{"http://www.example.com"},
+		AllowedOrigins:   []string{"http://www.example.com",},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"*"},
 		AllowCredentials: false,
@@ -53,6 +58,6 @@ func main() {
 	r.Mount(basePath+"/example", routers.Example.Router())
 	r.Mount(basePath+"/user", routers.User.Router())
 
-	log.Println("Starting server on port 8080")
-	log.Fatal(http.ListenAndServe(":8080", r))
+	log.Println("Starting server on port 1111")
+	log.Fatal(http.ListenAndServe(":1111", r))
 }
