@@ -10,11 +10,11 @@ var db *sql.DB
 
 func InitDB() {
 	var err error
-    connStr := "user=foodloopfp password=foodloopmcc dbname=foodloopdb2 sslmode=disable"
+	connStr := "user=foodloopfp password=foodloopmcc dbname=foodloopdb2 sslmode=disable"
 	db, err = sql.Open("postgres", connStr)
-    if err != nil {
-        panic(err)
-    }
+	if err != nil {
+		panic(err)
+	}
 }
 
 func GetDB() *sql.DB {
