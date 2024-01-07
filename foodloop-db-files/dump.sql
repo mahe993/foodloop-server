@@ -2,7 +2,10 @@ DROP DATABASE IF EXISTS foodloopdb;
 CREATE DATABASE foodloopdb;
 \c foodloopdb;
 
-CREATE SCHEMA foodloop
+CREATE SCHEMA foodloop;
+
+ALTER DATABASE foodloopdb SET search_path TO foodloop;
+
 CREATE TABLE foodloop.people (
 	peopleID INT PRIMARY KEY,
 	username VARCHAR (50) UNIQUE NOT NULL,
