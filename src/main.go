@@ -23,17 +23,20 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
 	"github.com/go-chi/render"
+	"github.com/joho/godotenv"
 )
 
 const (
 	basePath = "/api/v1"
 )
 
-func init() {
-	database.InitDB()
-}
-
 func main() {
+	if err := godotenv.Load(); err != nil {
+		log.Fatal("Error loading .env file")
+	}
+	database.InitDB()
+	defer database.CloseDB()
+
 	r := chi.NewRouter()
 
 	// Basic CORS
