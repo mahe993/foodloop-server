@@ -47,6 +47,8 @@ func (*ExampleRouter) Router() chi.Router {
 
 	})
 
+	r.Get("/food", services.Example.GetFood)
+
 	return r
 }
 
