@@ -13,6 +13,7 @@ Other modules:
 package main
 
 import (
+	"foodloop/src/database"
 	"foodloop/src/routers"
 	"log"
 	"net/http"
@@ -22,6 +23,7 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
 	"github.com/go-chi/render"
+	"github.com/joho/godotenv"
 )
 
 const (
@@ -29,6 +31,12 @@ const (
 )
 
 func main() {
+	if err := godotenv.Load(); err != nil {
+		log.Fatal("Error loading .env file")
+	}
+	database.InitDB()
+	defer database.CloseDB()
+
 	r := chi.NewRouter()
 
 	// Basic CORS
@@ -53,6 +61,6 @@ func main() {
 	r.Mount(basePath+"/example", routers.Example.Router())
 	r.Mount(basePath+"/user", routers.User.Router())
 
-	log.Println("Starting server on port 8080")
-	log.Fatal(http.ListenAndServe(":8080", r))
+	log.Println("Starting server on port 1111")
+	log.Fatal(http.ListenAndServe(":1111", r))
 }

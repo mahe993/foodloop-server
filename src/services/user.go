@@ -14,18 +14,18 @@ var User UserService
 
 func (*UserService) GetAll(w http.ResponseWriter, r *http.Request) {
 	users := []models.User{
-		{Id: 1, Username: "user1"},
-		{Id: 2, Username: "user2"},
-		{Id: 3, Username: "user3"},
+		{UserID: 1, Username: "user1", Password: "123"},
+		{UserID: 2, Username: "user2", Password: "123"},
+		{UserID: 3, Username: "user3", Password: "123"},
 	}
 	render.JSON(w, r, users)
 }
 
 func (*UserService) GetUser(w http.ResponseWriter, r *http.Request) {
 	users := []models.User{
-		{Id: 1, Username: "user1"},
-		{Id: 2, Username: "user2"},
-		{Id: 3, Username: "user3"},
+		{UserID: 1, Username: "user1"},
+		{UserID: 2, Username: "user2"},
+		{UserID: 3, Username: "user3"},
 	}
 
 	id := r.Context().Value("userID").(string)
@@ -35,7 +35,7 @@ func (*UserService) GetUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	for _, user := range users {
-		if user.Id == idInt {
+		if user.UserID == idInt {
 			render.JSON(w, r, user)
 			return
 		}

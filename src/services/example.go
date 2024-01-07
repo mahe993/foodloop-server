@@ -4,6 +4,7 @@ Package services consumes the requests and provides the business logic pertainin
 package services
 
 import (
+	"foodloop/src/database"
 	"foodloop/src/models"
 	"log"
 	"net/http"
@@ -90,4 +91,35 @@ func (*ExampleService) UpdateID(w http.ResponseWriter, r *http.Request) {
 	}
 
 	render.JSON(w, r, newIDStruct)
+}
+
+// GetFood is the handler for GET /api/v1/example/food
+func (*ExampleService) GetFood(w http.ResponseWriter, r *http.Request) {
+	rows, err := database.GetDB().Query("SELECT * FROM food")
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
+
+	var food struct {
+		Id          int    `json:"id"`
+		Name        string `json:"name"`
+		Description string `json:"description"`
+	}
+
+	var res []struct {
+		Id          int    `json:"id"`
+		Name        string `json:"name"`
+		Description string `json:"description"`
+	}
+
+	for rows.Next() {
+		err := rows.Scan(&food.Id, &food.Name, &food.Description)
+		if err != nil {
+			panic(err)
+		}
+		res = append(res, food)
+	}
+
+	render.JSON(w, r, res)
 }
