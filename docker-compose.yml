@@ -12,7 +12,6 @@ services:
       - ./foodloop-db-files/insertRestaurantToFood.sql:/docker-entrypoint-initdb.d/insertRestaurantToFood.sql
       - ./foodloop-db-files/insertRestaurantToTag.sql:/docker-entrypoint-initdb.d/insertRestaurantToTag.sql
       - ./foodloop-db-files/insertTag.sql:/docker-entrypoint-initdb.d/insertTag.sql
-    # user: "965685620:396131994"
     ports:
       - 5432:5432
     environment:
