@@ -5,7 +5,13 @@ services:
     container_name: foodloop-postgres
     volumes:
       - ./foodloop-data:/var/lib/postgresql/data
-      - ./foodloop-db-files/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+      - ./foodloop-db-files/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+      - ./foodloop-db-files/seeders/insertFood.sql:/docker-entrypoint-initdb.d/insertFood.sql
+      - ./foodloop-db-files/seeders/insertFoodToTag.sql:/docker-entrypoint-initdb.d/insertFoodToTag.sql
+      - ./foodloop-db-files/seeders/insertRestaurant.sql:/docker-entrypoint-initdb.d/insertRestaurant.sql
+      - ./foodloop-db-files/seeders/insertRestaurantToFood.sql:/docker-entrypoint-initdb.d/insertRestaurantToFood.sql
+      - ./foodloop-db-files/seeders/insertRestaurantToTag.sql:/docker-entrypoint-initdb.d/insertRestaurantToTag.sql
+      - ./foodloop-db-files/seeders/insertTag.sql:/docker-entrypoint-initdb.d/insertTag.sql
     ports:
       - 5432:5432
     environment:
