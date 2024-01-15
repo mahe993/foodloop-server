@@ -1,3 +1,5 @@
+SELECT current_database();
+\c foodloopdb;
 INSERT INTO foodloop.food(foodName, descriptions) VALUES ('Chilli Crab', 'Wok-fried crab in a spicy, tangy tomato-based sauce.');
 INSERT INTO foodloop.food(foodName, descriptions) VALUES ('Black Pepper Prawns', 'Juicy prawns stir-fried with aromatic black pepper.');
 INSERT INTO foodloop.food(foodName, descriptions) VALUES ('Salted Egg Calamari', 'Crispy calamari coated in rich salted egg yolk sauce.');

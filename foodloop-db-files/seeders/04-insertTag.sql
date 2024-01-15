@@ -1,3 +1,5 @@
+SELECT current_database();
+\c foodloopdb;
 INSERT INTO foodloop.tag(tagID, tagName) VALUES (1, 'noodles');
 INSERT INTO foodloop.tag(tagID, tagName) VALUES (2, 'matcha');
 INSERT INTO foodloop.tag(tagID, tagName) VALUES (3, 'fragrant');
