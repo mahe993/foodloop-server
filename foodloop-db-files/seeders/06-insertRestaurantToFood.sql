@@ -1,3 +1,5 @@
+SELECT current_database();
+\c foodloopdb;
 INSERT INTO foodloop.restaurantToFood(restaurantID, foodID) VALUES (1, 1);
 INSERT INTO foodloop.restaurantToFood(restaurantID, foodID) VALUES (1, 2);
 INSERT INTO foodloop.restaurantToFood(restaurantID, foodID) VALUES (1, 3);

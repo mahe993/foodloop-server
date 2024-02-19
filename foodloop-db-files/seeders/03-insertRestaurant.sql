@@ -1,3 +1,5 @@
+SELECT current_database();
+\c foodloopdb;
 INSERT INTO foodloop.restaurant(restaurantName, descriptions) VALUES ('Chilli Crab Cove', 'A seafood haven specializing in the iconic Singaporean Chilli Crab. Dive into a sea of flavors at Chilli Crab Cove.');
 INSERT INTO foodloop.restaurant(restaurantName, descriptions) VALUES ('Sushi Symphony', 'A culinary orchestra of sushi delights awaits at Sushi Symphony, where precision meets creativity in every roll.');
 INSERT INTO foodloop.restaurant(restaurantName, descriptions) VALUES ('Tiffin Tandoor', 'Experience the rich tapestry of Indian flavors at Tiffin Tandoor, where traditional tandoori dishes take center stage.');

@@ -1,3 +1,5 @@
+SELECT current_database();
+\c foodloopdb;
 INSERT INTO foodloop.foodToTag(foodID, tagID) VALUES (1, 99);
 INSERT INTO foodloop.foodToTag(foodID, tagID) VALUES (1, 82);
 INSERT INTO foodloop.foodToTag(foodID, tagID) VALUES (2, 16);
