@@ -14,8 +14,8 @@ var Foodlist FoodlistService
 
 func (*FoodlistService) GetAll(w http.ResponseWriter, r *http.Request) {
 	FoodlistServices := []models.Food{
-		{ 
-			FoodID: 1,
+		{
+			FoodID:   1,
 			FoodName: "hehe",
 		},
 	}
@@ -23,8 +23,7 @@ func (*FoodlistService) GetAll(w http.ResponseWriter, r *http.Request) {
 }
 
 func (*FoodlistService) GetFoodlist(w http.ResponseWriter, r *http.Request) {
-	FoodlistServices := []models.Foodlist{
-	}
+	FoodlistServices := []models.Foodlist{}
 
 	id := r.Context().Value("FoodlistServiceID").(string)
 	idInt, err := strconv.Atoi(id)

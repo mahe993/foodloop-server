@@ -37,7 +37,7 @@ func (*FoodlistRouter) IDCtx(next http.Handler) http.Handler {
 			return
 		}
 
-		ctx := context.WithValue(r.Context(), "Foodlist", foodlistID)
+		ctx := context.WithValue(r.Context(), "foodlist", foodlistID)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
