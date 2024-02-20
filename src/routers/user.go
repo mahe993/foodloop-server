@@ -23,7 +23,9 @@ func (*UserRouter) Router() chi.Router {
 	r.Route("/{id}", func(r chi.Router) {
 		r.Use(User.IDCtx)
 		r.Get("/", services.User.GetUser)
+		r.Mount("/foodlist", Foodlist.Router())
 	})
+
 	return r
 }
 
