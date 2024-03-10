@@ -2,7 +2,6 @@ package services
 
 import (
 	"foodloop/src/database"
-	"foodloop/src/models"
 	"net/http"
 
 	"github.com/go-chi/render"
@@ -12,13 +11,11 @@ type FoodlistService struct{}
 
 var Foodlist FoodlistService
 
-func (*FoodlistService) GetAll(w http.ResponseWriter, r *http.Request) {
-	Foodlist := []models.Food{
-		{
-			FoodName: "hehe",
-		},
-	}
-	render.JSON(w, r, Foodlist)
+func (*FoodlistService) GetAllForUser(w http.ResponseWriter, r *http.Request) {
+	userID := r.Context().Value("userID").(string)
+
+	foodlist := database.GetAllForUser(userID)
+	render.JSON(w, r, foodlist)
 }
 
 func (*FoodlistService) GetFoodlist(w http.ResponseWriter, r *http.Request) {
