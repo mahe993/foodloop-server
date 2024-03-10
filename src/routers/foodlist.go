@@ -20,7 +20,7 @@ func (*FoodlistRouter) Router() chi.Router {
 
 	r.Get("/", services.Foodlist.GetAll)
 
-	r.Route("/{id}", func(r chi.Router) {
+	r.Route("/{userID}/{id}", func(r chi.Router) {
 		r.Use(Foodlist.IDCtx)
 		r.Get("/", services.Foodlist.GetFoodlist)
 	})
@@ -32,12 +32,14 @@ func (*FoodlistRouter) IDCtx(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
 		foodlistID := chi.URLParam(r, "id")
+		userID := chi.URLParam(r, "userID")
 		if foodlistID == "" {
 			render.Respond(w, r, errors.New("foodlist ID is required"))
 			return
 		}
 
-		ctx := context.WithValue(r.Context(), "foodlist", foodlistID)
+		ctx := context.WithValue(r.Context(), "foodlistID", foodlistID)
+		ctx = context.WithValue(ctx, "userID", userID)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
