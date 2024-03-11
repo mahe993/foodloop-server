@@ -14,7 +14,13 @@ var Foodlist FoodlistService
 func (*FoodlistService) GetAllForUser(w http.ResponseWriter, r *http.Request) {
 	userID := r.Context().Value("userID").(string)
 
-	foodlist := database.GetAllForUser(userID)
+	foodlist, err := database.GetAllForUser(userID)
+	if err != nil {
+		render.Status(r, http.StatusBadRequest)
+		render.JSON(w, r, err.Error())
+		return
+	}
+
 	render.JSON(w, r, foodlist)
 }
 
@@ -22,9 +28,12 @@ func (*FoodlistService) GetFoodlist(w http.ResponseWriter, r *http.Request) {
 	foodlistID := r.Context().Value("foodlistID").(string)
 	userID := r.Context().Value("userID").(string)
 
-	foodlist := database.GetFoodlist(userID, foodlistID)
-	render.JSON(w, r, foodlist)
+	foodlist, err := database.GetFoodlist(userID, foodlistID)
+	if err != nil {
+		render.Status(r, http.StatusBadRequest)
+		render.JSON(w, r, err.Error())
+		return
+	}
 
-	// render.Respond(w, r, "FoodlistService not found")
-	// return
+	render.JSON(w, r, foodlist)
 }

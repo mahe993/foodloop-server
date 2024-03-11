@@ -5,7 +5,7 @@ import (
 	"foodloop/src/models"
 )
 
-func GetAllForUser(userID string) []models.Foodlist {
+func GetAllForUser(userID string) ([]models.Foodlist, error) {
 	rows, err := db.Query(
 		`
 		SELECT ptf.foodlistid, foodname, f.descriptions 
@@ -26,6 +26,7 @@ func GetAllForUser(userID string) []models.Foodlist {
 	)
 	if err != nil {
 		fmt.Println(err)
+		return nil, err
 	}
 
 	foodlists := map[string]*models.Foodlist{}
@@ -51,10 +52,10 @@ func GetAllForUser(userID string) []models.Foodlist {
 	for _, v := range foodlists {
 		response = append(response, *v)
 	}
-	return response
+	return response, nil
 }
 
-func GetFoodlist(userID string, foodlistID string) models.Foodlist {
+func GetFoodlist(userID string, foodlistID string) (models.Foodlist, error) {
 	rows, err := db.Query(
 		`
 		SELECT foodname, f.descriptions 
@@ -77,6 +78,7 @@ func GetFoodlist(userID string, foodlistID string) models.Foodlist {
 	)
 	if err != nil {
 		fmt.Println(err)
+		return models.Foodlist{}, err
 	}
 
 	foodlist := []models.Food{}
@@ -87,12 +89,13 @@ func GetFoodlist(userID string, foodlistID string) models.Foodlist {
 			&food.Descriptions,
 		); err != nil {
 			fmt.Println(err)
+			return models.Foodlist{}, err
 		}
 		foodlist = append(foodlist, food)
 	}
 
 	return models.Foodlist{
 		Foodlist: foodlist,
-	}
+	}, nil
 
 }
