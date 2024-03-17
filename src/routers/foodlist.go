@@ -21,7 +21,7 @@ func (*FoodlistRouter) Router() chi.Router {
 	r.Route("/{userID}", func(r chi.Router) {
 		r.Use(Foodlist.GetUserID)
 		r.Get("/", services.Foodlist.GetAllForUser)
-
+		r.Post("/", services.Foodlist.CreateFoodlist)
 		r.Route("/{id}", func(r chi.Router) {
 			r.Use(Foodlist.GetUserIDAndFoodlistID)
 			r.Get("/", services.Foodlist.GetFoodlist)

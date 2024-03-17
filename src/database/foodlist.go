@@ -3,7 +3,49 @@ package database
 import (
 	"fmt"
 	"foodloop/src/models"
+	"strings"
 )
+
+func GetTagsID(tags []string) []models.Food {
+	concatTags := strings.Join(tags, "','")
+	rows, err := db.Query(
+		`
+		SELECT fff.foodName, fff.descriptions
+		FROM
+			(
+			SELECT ff.foodName, ff.descriptions, COUNT(ff.tagName) as count
+			FROM (
+				SELECT f.foodName, f.descriptions, t.tagName 
+				FROM foodloop.food f 
+				LEFT JOIN foodloop.foodToTag ftt 
+				ON f.foodID = ftt.foodID 
+				LEFT JOIN foodloop.tag t 
+				ON t.tagID = ftt.tagID 
+				WHERE t.tagName 
+				IN ('`+concatTags+`')
+				) as ff
+			GROUP BY ff.foodName, ff.descriptions
+			) as fff
+		WHERE fff.count = $1
+		`,
+		2,
+	)
+	if err != nil {
+		fmt.Println(err)
+	}
+	res := []models.Food{}
+	for rows.Next() {
+		var food models.Food
+		if err := rows.Scan(
+			&food.FoodName,
+			&food.Descriptions,
+		); err != nil {
+			fmt.Println(err)
+		}
+		res = append(res, food)
+	}
+	return res
+}
 
 func GetAllForUser(userID string) ([]models.Foodlist, error) {
 	rows, err := db.Query(
