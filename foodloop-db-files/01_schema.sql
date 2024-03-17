@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS foodloopdb;
-CREATE DATABASE foodloopdb;
-\c foodloopdb;
+-- DROP DATABASE IF EXISTS foodloopdb;
+-- CREATE DATABASE foodloopdb;
+-- \c foodloopdb;
 
 CREATE SCHEMA foodloop;
 

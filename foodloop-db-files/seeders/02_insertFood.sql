@@ -1,3 +1,4 @@
+BEGIN;
 INSERT INTO foodloop.food(foodName, descriptions) VALUES ('Chilli Crab', 'Wok-fried crab in a spicy, tangy tomato-based sauce.');
 INSERT INTO foodloop.food(foodName, descriptions) VALUES ('Black Pepper Prawns', 'Juicy prawns stir-fried with aromatic black pepper.');
 INSERT INTO foodloop.food(foodName, descriptions) VALUES ('Salted Egg Calamari', 'Crispy calamari coated in rich salted egg yolk sauce.');
@@ -326,3 +327,4 @@ INSERT INTO foodloop.food(foodName, descriptions) VALUES ('Cascara Sparkling Inf
 INSERT INTO foodloop.food(foodName, descriptions) VALUES ('Guatemalan Huehuetenango Drip', 'Drip coffee featuring beans from the high-altitude Huehuetenango region of Guatemala, known for their bright acidity.');
 INSERT INTO foodloop.food(foodName, descriptions) VALUES ('Orange Zest Cold Brew', 'Cold brew coffee infused with the zest of fresh oranges, offering a citrusy and invigorating experience.');
 INSERT INTO foodloop.food(foodName, descriptions) VALUES ('Halal Malaysian Liberica Latte', 'Latte crafted with halal-certified Liberica beans from the tropical landscapes of Malaysia, providing a unique and flavorful coffee.');
+COMMIT;
