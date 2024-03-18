@@ -5,6 +5,7 @@ import (
 	"foodloop/src/database"
 	"io"
 	"net/http"
+	"strconv"
 	"strings"
 
 	"github.com/bbalet/stopwords"
@@ -26,6 +27,8 @@ func cleanQuery(s string) []string {
 }
 
 func (*FoodlistService) CreateFoodlist(w http.ResponseWriter, r *http.Request) {
+	userIDStr := r.Context().Value("userID").(string)
+	userID, _ := strconv.Atoi(userIDStr)
 	body, err := io.ReadAll(r.Body)
 	if err != nil {
 		render.Status(r, http.StatusBadRequest)
@@ -40,11 +43,20 @@ func (*FoodlistService) CreateFoodlist(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	tags := cleanQuery(resp.Query)
-	foodlist := database.GetTagsID(tags)
+	foodlist, err := database.GenerateFoodlist(tags)
+	if err != nil {
+		render.Status(r, http.StatusBadRequest)
+		render.JSON(w, r, err.Error())
+		return
+	}
 
+	if err := database.InsertFoodlist(userID, foodlist); err != nil {
+		render.Status(r, http.StatusBadRequest)
+		render.JSON(w, r, err.Error())
+		return
+	}
 	render.JSON(w, r, foodlist)
-	// render.Respond(w, r, "FoodlistService not found")
-	// return
+
 }
 
 func (*FoodlistService) GetAllForUser(w http.ResponseWriter, r *http.Request) {

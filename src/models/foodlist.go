@@ -5,6 +5,7 @@ type Foodlist struct {
 }
 
 type Food struct {
+	FoodID       int    `json:"foodID"`
 	FoodName     string `json:"foodName"`
 	Descriptions string `json:"descriptions"`
 }
