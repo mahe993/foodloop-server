@@ -85,7 +85,6 @@ func InsertFoodlist(id int, list []models.Food) error {
 		stmt += fmt.Sprintf("(%d, %d),", currID+1, v.FoodID)
 	}
 	stmt = stmt[0 : len(stmt)-1]
-	fmt.Println(stmt)
 	if _, err := db.Exec(
 		stmt,
 	); err != nil {
