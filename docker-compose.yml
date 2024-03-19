@@ -4,7 +4,7 @@ services:
     image: "postgres:16.1-alpine"
     container_name: foodloop-postgres
     volumes:
-      - ./foodloop-data:/lib/postgresql/data
+      - ./foodloop-data:/var/lib/postgresql/data
       - ./foodloop-db-files/01_schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
       - ./foodloop-db-files/seeders/02_insertFood.sql:/docker-entrypoint-initdb.d/02_insertFood.sql
       - ./foodloop-db-files/seeders/04_insertFoodToTag.sql:/docker-entrypoint-initdb.d/04_insertFoodToTag.sql

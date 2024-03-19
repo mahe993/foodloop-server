@@ -1,6 +1,7 @@
--- DROP DATABASE IF EXISTS foodloopdb;
--- CREATE DATABASE foodloopdb;
--- \c foodloopdb;
+\c postgres;
+DROP DATABASE IF EXISTS foodloopdb;
+CREATE DATABASE foodloopdb;
+\c foodloopdb;
 
 CREATE SCHEMA foodloop;
 
