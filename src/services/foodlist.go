@@ -52,7 +52,11 @@ func (*FoodlistService) CreateFoodlist(w http.ResponseWriter, r *http.Request) {
 		render.JSON(w, r, err.Error())
 		return
 	}
-
+	if len(foodlist) == 0 {
+		render.Status(r, http.StatusBadRequest)
+		render.JSON(w, r, "we couldn't generate a list for that query :(")
+		return
+	}
 	if err := database.InsertFoodlist(userID, foodlist, resp.Day, resp.Time, resp.Title); err != nil {
 		render.Status(r, http.StatusBadRequest)
 		render.JSON(w, r, err.Error())

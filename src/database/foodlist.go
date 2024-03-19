@@ -28,7 +28,7 @@ func GenerateFoodlist(tags []string) ([]models.Food, error) {
 			) as fff
 		WHERE fff.count = $1
 		`,
-		2,
+		1,
 	)
 	if err != nil {
 		return nil, err
@@ -50,25 +50,20 @@ func GenerateFoodlist(tags []string) ([]models.Food, error) {
 
 func InsertFoodlist(id int, list []models.Food, title string, time string, day string) error {
 	var newID int64
-	fmt.Println("ehehhee")
-	if row, err := db.Exec(
+	if err := db.QueryRow(
 		`
 		INSERT INTO foodloop.foodlist(foodlistName, foodlistTime, foodlistDay, foodlistCurrIdx)
 		VALUES($1, $2, $3, $4)
+		RETURNING foodlistID
 		`,
 		title,
 		time,
 		day,
 		0,
-	); err != nil {
+	).Scan(&newID); err != nil {
 		return err
-	} else {
-		newID, err = row.LastInsertId()
-		if err != nil {
-			return err
-		}
 	}
-	fmt.Println("ehehheeheheh")
+
 	if _, err := db.Exec(
 		`
 		INSERT INTO foodloop.peopleToFoodlist(peopleID, foodlistID)
