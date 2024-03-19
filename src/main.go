@@ -60,6 +60,7 @@ func main() {
 	// mount routes
 	r.Mount(basePath+"/example", routers.Example.Router())
 	r.Mount(basePath+"/user", routers.User.Router())
+	r.Mount(basePath+"/foodlist", routers.Foodlist.Router())
 
 	log.Println("Starting server on port 1111")
 	log.Fatal(http.ListenAndServe(":1111", r))

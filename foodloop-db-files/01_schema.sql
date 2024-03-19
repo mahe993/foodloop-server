@@ -1,3 +1,4 @@
+\c postgres;
 DROP DATABASE IF EXISTS foodloopdb;
 CREATE DATABASE foodloopdb;
 \c foodloopdb;

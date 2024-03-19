@@ -5,13 +5,13 @@ services:
     container_name: foodloop-postgres
     volumes:
       - ./foodloop-data:/var/lib/postgresql/data
-      - ./foodloop-db-files/schema.sql:/docker-entrypoint-initdb.d/schema.sql
-      - ./foodloop-db-files/seeders/insertFood.sql:/docker-entrypoint-initdb.d/insertFood.sql
-      - ./foodloop-db-files/seeders/insertFoodToTag.sql:/docker-entrypoint-initdb.d/insertFoodToTag.sql
-      - ./foodloop-db-files/seeders/insertRestaurant.sql:/docker-entrypoint-initdb.d/insertRestaurant.sql
-      - ./foodloop-db-files/seeders/insertRestaurantToFood.sql:/docker-entrypoint-initdb.d/insertRestaurantToFood.sql
-      - ./foodloop-db-files/seeders/insertRestaurantToTag.sql:/docker-entrypoint-initdb.d/insertRestaurantToTag.sql
-      - ./foodloop-db-files/seeders/insertTag.sql:/docker-entrypoint-initdb.d/insertTag.sql
+      - ./foodloop-db-files/01_schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
+      - ./foodloop-db-files/seeders/02_insertFood.sql:/docker-entrypoint-initdb.d/02_insertFood.sql
+      - ./foodloop-db-files/seeders/04_insertFoodToTag.sql:/docker-entrypoint-initdb.d/04_insertFoodToTag.sql
+      - ./foodloop-db-files/seeders/05_insertRestaurant.sql:/docker-entrypoint-initdb.d/05_insertRestaurant.sql
+      - ./foodloop-db-files/seeders/06_insertRestaurantToFood.sql:/docker-entrypoint-initdb.d/06_insertRestaurantToFood.sql
+      - ./foodloop-db-files/seeders/07_insertRestaurantToTag.sql:/docker-entrypoint-initdb.d/07_insertRestaurantToTag.sql
+      - ./foodloop-db-files/seeders/03_insertTag.sql:/docker-entrypoint-initdb.d/03_insertTag.sql
     ports:
       - 5432:5432
     environment:
