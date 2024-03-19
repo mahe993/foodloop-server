@@ -18,6 +18,9 @@ var Foodlist FoodlistService
 
 type postResp struct {
 	Query string `json:"query"`
+	Title string `json:"title"`
+	Day   string `json:"recurringDay"`
+	Time  string `json:"recurringTime"`
 }
 
 func cleanQuery(s string) []string {
@@ -50,7 +53,7 @@ func (*FoodlistService) CreateFoodlist(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := database.InsertFoodlist(userID, foodlist); err != nil {
+	if err := database.InsertFoodlist(userID, foodlist, resp.Day, resp.Time, resp.Title); err != nil {
 		render.Status(r, http.StatusBadRequest)
 		render.JSON(w, r, err.Error())
 		return
