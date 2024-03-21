@@ -1,11 +1,11 @@
 package models
 
 type Foodlist struct {
-	FoodlistID      int    `json:"FoodlistID"`
-	FoodlistName    string `json:"FoodlistName"`
-	FoodlistTime    string `json:"FoodlistTime"`
-	FoodlistDay     string `json:"FoodlistDay"`
-	FoodlistCurrIdx int    `json:"FoodlistCurrIdx"`
+	FoodlistID      int    `json:"foodlistID"`
+	FoodlistName    string `json:"foodlistName"`
+	FoodlistTime    string `json:"foodlistTime"`
+	FoodlistDay     string `json:"foodlistDay"`
+	FoodlistCurrIdx int    `json:"foodlistCurrIdx"`
 	Foodlist        []Food
 }
 
