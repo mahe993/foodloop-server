@@ -9,12 +9,15 @@ ALTER DATABASE foodloopdb SET search_path TO foodloop;
 
 CREATE TABLE foodloop.people (
     peopleID SERIAL PRIMARY KEY,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    password VARCHAR(50) NOT NULL
+    name VARCHAR(50) UNIQUE NOT NULL
 );
 
 CREATE TABLE foodloop.foodlist (
-    foodlistID SERIAL PRIMARY KEY
+    foodlistID SERIAL PRIMARY KEY,
+    foodlistName VARCHAR(100),
+    foodlistTime TIME,
+    foodlistDay VARCHAR(20),
+    foodlistCurrIdx INTEGER
 );
 
 CREATE TABLE foodloop.restaurant (
@@ -49,7 +52,8 @@ CREATE TABLE foodloop.peopleToFoodlist (
 CREATE TABLE foodloop.foodlistToFood (
     foodlistID INT,
     foodID INT,
-    PRIMARY KEY (foodlistID, foodID),
+    foodIndex INT,
+    PRIMARY KEY (foodlistID, foodIndex),
     CONSTRAINT fk_foodlist
         FOREIGN KEY (foodlistID)
             REFERENCES foodloop.foodlist(foodlistID),
