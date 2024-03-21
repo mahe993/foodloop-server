@@ -169,7 +169,7 @@ func GetFoodlist(userID string, foodlistID string) (models.Foodlist, error) {
 		LEFT JOIN restaurant r 
 		ON r.restaurantid = rtf.restaurantid
 		WHERE p.peopleid = $1
-		AND ptf.foodlistid = $2;
+		AND ptf.foodlistid = $2
 		ORDER BY ftf.foodIndex ASC
 		`,
 		userID,
