@@ -45,18 +45,18 @@ func (*FoodlistService) CreateFoodlist(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	tags := cleanQuery(req.Query)
-	foodlist, err := database.GenerateFoodlist(tags)
+	foods, err := database.GenerateFoodlist(tags)
 	if err != nil {
 		render.Status(r, http.StatusBadRequest)
 		render.JSON(w, r, err.Error())
 		return
 	}
-	if len(foodlist) == 0 {
+	if len(foods) == 0 {
 		render.Status(r, http.StatusBadRequest)
 		render.JSON(w, r, "we couldn't generate a list for that query :(")
 		return
 	}
-	fl, err := database.InsertFoodlist(userID, foodlist, req.Title, req.Time, req.Day)
+	fl, err := database.InsertFoodlist(userID, foods, req.Title, req.Time, req.Day)
 	if err != nil {
 		render.Status(r, http.StatusBadRequest)
 		render.JSON(w, r, err.Error())

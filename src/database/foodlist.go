@@ -1,6 +1,7 @@
 package database
 
 import (
+	"errors"
 	"fmt"
 	"foodloop/src/models"
 	"strings"
@@ -50,16 +51,21 @@ func GenerateFoodlist(tags []string) ([]models.Food, error) {
 }
 
 func InsertFoodlist(id int, list []models.Food, title string, time string, day string) (models.Foodlist, error) {
+	if len(list) == 0 {
+		return models.Foodlist{}, errors.New("empty list")
+	}
+
 	r := db.QueryRow(
 		`
-		INSERT INTO foodloop.foodlist(foodlistName, foodlistTime, foodlistDay, foodlistCurrIdx)
-		VALUES($1, $2, $3, $4)
+		INSERT INTO foodloop.foodlist(foodlistName, foodlistTime, foodlistDay, foodlistCurrIdx, foodlistCategory)
+		VALUES($1, $2, $3, $4, $5)
 		RETURNING *
 		`,
 		title,
 		time,
 		day,
 		0,
+		list[0].Category,
 	)
 
 	var foodlist models.Foodlist
@@ -69,6 +75,7 @@ func InsertFoodlist(id int, list []models.Food, title string, time string, day s
 		&foodlist.FoodlistTime,
 		&foodlist.FoodlistDay,
 		&foodlist.FoodlistCurrIdx,
+		&foodlist.FoodlistCategory,
 	); err != nil {
 		return models.Foodlist{}, err
 	}

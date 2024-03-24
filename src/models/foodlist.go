@@ -1,19 +1,20 @@
 package models
 
 type Foodlist struct {
-	FoodlistID      int    `json:"foodlistID"`
-	FoodlistName    string `json:"foodlistName"`
-	FoodlistTime    string `json:"foodlistTime"`
-	FoodlistDay     string `json:"foodlistDay"`
-	FoodlistCurrIdx int    `json:"foodlistCurrIdx"`
+	FoodlistID       int    `json:"id"`
+	FoodlistName     string `json:"title"`
+	FoodlistTime     string `json:"recurringTime"`
+	FoodlistDay      string `json:"recurringDay"`
+	FoodlistCurrIdx  int    `json:"currentFoodIdx"`
+	FoodlistCategory string `json:"category"`
 }
 
 type Food struct {
-	FoodID       int    `json:"foodID"`
-	FoodName     string `json:"foodName"`
-	Descriptions string `json:"descriptions"`
+	FoodID       int    `json:"id"`
+	FoodName     string `json:"name"`
+	Descriptions string `json:"description"`
 	Category     string `json:"category"`
-	FoodIndex    int    `json:"foodIndex"`
+	FoodIndex    int    `json:"index"`
 }
 
 type CreateFoodlistRequest struct {
