@@ -74,18 +74,6 @@ CREATE TABLE foodloop.restaurantToFood (
             REFERENCES foodloop.food(foodID)
 );
 
-CREATE TABLE foodloop.restaurantToTag (
-    restaurantID INT,
-    tagID INT,
-    PRIMARY KEY (restaurantID, tagID),
-    CONSTRAINT fk_restaurant
-        FOREIGN KEY (restaurantID)
-            REFERENCES foodloop.restaurant(restaurantID),
-    CONSTRAINT fk_tag
-        FOREIGN KEY (tagID)
-            REFERENCES foodloop.tag(tagID)
-);
-
 CREATE TABLE foodloop.foodToTag (
     foodID INT,
     tagID INT,
