@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 services:
   foodloop-postgres:
     image: "postgres:16.1-alpine"
@@ -26,7 +26,7 @@ services:
       PGUSER: ${POSTGRES_USER}
       PGDATABASE: ${POSTGRES_DB}
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready" ]
+      test: ["CMD-SHELL", "pg_isready"]
       interval: 5s
       timeout: 5s
       retries: 5

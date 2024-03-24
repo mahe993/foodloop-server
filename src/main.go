@@ -42,7 +42,7 @@ func main() {
 	// Basic CORS
 	r.Use(cors.Handler(cors.Options{
 		// TODO: change example.com to FE domain once deployed
-		AllowedOrigins:   []string{"http://www.example.com"},
+		AllowedOrigins:   []string{"http://www.example.com", "http://localhost:5173"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"*"},
 		AllowCredentials: false,

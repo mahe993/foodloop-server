@@ -17,7 +17,8 @@ CREATE TABLE foodloop.foodlist (
     foodlistName VARCHAR(100),
     foodlistTime VARCHAR(20),
     foodlistDay VARCHAR(20),
-    foodlistCurrIdx INTEGER
+    foodlistCurrIdx INTEGER,
+    foodlistCategory VARCHAR(20)
 );
 
 CREATE TABLE foodloop.restaurant (
