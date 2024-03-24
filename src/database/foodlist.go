@@ -6,7 +6,7 @@ import (
 	"foodloop/src/models"
 )
 
-func InsertFoodlist(id int, list []models.Food, title string, time string, day string) (models.Foodlist, error) {
+func InsertFoodlist(id int, list []models.Food, time string, day string) (models.Foodlist, error) {
 	if len(list) == 0 {
 		return models.Foodlist{}, errors.New("empty list")
 	}
@@ -17,7 +17,7 @@ func InsertFoodlist(id int, list []models.Food, title string, time string, day s
 		VALUES($1, $2, $3, $4, $5)
 		RETURNING *
 		`,
-		title,
+		list[0].Category,
 		time,
 		day,
 		0,
