@@ -14,8 +14,7 @@ services:
       - ./foodloop-db-files/seeders/07_insertFoodToTag.sql:/docker-entrypoint-initdb.d/07_insertFoodToTag.sql
       - ./foodloop-db-files/seeders/08_insertRestaurant.sql:/docker-entrypoint-initdb.d/08_insertRestaurant.sql
       - ./foodloop-db-files/seeders/09_insertRestaurantToFood.sql:/docker-entrypoint-initdb.d/09_insertRestaurantToFood.sql
-      - ./foodloop-db-files/seeders/10_insertRestaurantToTag.sql:/docker-entrypoint-initdb.d/10_insertRestaurantToTag.sql
-      - ./foodloop-db-files/seeders/11_insertFoodlistToFood.sql:/docker-entrypoint-initdb.d/11_insertFoodlistToFood.sql
+      - ./foodloop-db-files/seeders/10_insertFoodlistToFood.sql:/docker-entrypoint-initdb.d/10_insertFoodlistToFood.sql
 
     ports:
       - 5432:5432
