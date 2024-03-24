@@ -10,12 +10,12 @@ func GenerateFoodlist(tags []string) ([]models.Food, error) {
 	concatTags := strings.Join(tags, "','")
 	rows, err := db.Query(
 		`
-		SELECT fff.foodID, fff.foodName, fff.descriptions
+		SELECT fff.foodID, fff.foodName, fff.descriptions, fff.category
 		FROM
 			(
-			SELECT ff.foodID, ff.foodName, ff.descriptions, COUNT(ff.tagName) as count
+			SELECT ff.foodID, ff.foodName, ff.descriptions, ff.category, COUNT(ff.tagName) as count
 			FROM (
-				SELECT f.foodID, f.foodName, f.descriptions, t.tagName 
+				SELECT f.foodID, f.foodName, f.descriptions, t.tagName, f.category
 				FROM foodloop.food f 
 				LEFT JOIN foodloop.foodToTag ftt 
 				ON f.foodID = ftt.foodID 
@@ -24,7 +24,7 @@ func GenerateFoodlist(tags []string) ([]models.Food, error) {
 				WHERE t.tagName 
 				IN ('`+concatTags+`')
 				) as ff
-			GROUP BY ff.foodID, ff.foodName, ff.descriptions
+			GROUP BY ff.foodID, ff.foodName, ff.descriptions, ff.category
 			) as fff
 		WHERE fff.count = $1
 		`,
@@ -40,6 +40,7 @@ func GenerateFoodlist(tags []string) ([]models.Food, error) {
 			&food.FoodID,
 			&food.FoodName,
 			&food.Descriptions,
+			&food.Category,
 		); err != nil {
 			return nil, err
 		}
@@ -156,7 +157,7 @@ func GetFoodlist(userID string, foodlistID string) (models.Foodlist, error) {
 
 	rows, err = db.Query(
 		`
-		SELECT f.foodID, f.foodName, f.descriptions, ftf.foodIndex
+		SELECT f.foodID, f.foodName, f.descriptions, f.category, ftf.foodIndex
 		FROM foodloop.people p 
 		LEFT JOIN foodloop.peopleToFoodlist ptf 
 		ON p.peopleid = ptf.peopleid 
@@ -187,6 +188,7 @@ func GetFoodlist(userID string, foodlistID string) (models.Foodlist, error) {
 			&food.FoodID,
 			&food.FoodName,
 			&food.Descriptions,
+			&food.Category,
 			&food.FoodIndex,
 		); err != nil {
 			fmt.Println(err)
@@ -197,5 +199,4 @@ func GetFoodlist(userID string, foodlistID string) (models.Foodlist, error) {
 
 	foodlist.Foodlist = foods
 	return foodlist, nil
-
 }

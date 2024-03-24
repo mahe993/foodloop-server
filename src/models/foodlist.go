@@ -13,5 +13,6 @@ type Food struct {
 	FoodID       int    `json:"foodID"`
 	FoodName     string `json:"foodName"`
 	Descriptions string `json:"descriptions"`
+	Category     string `json:"category"`
 	FoodIndex    int    `json:"foodIndex"`
 }

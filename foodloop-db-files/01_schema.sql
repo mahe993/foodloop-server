@@ -15,21 +15,21 @@ CREATE TABLE foodloop.people (
 CREATE TABLE foodloop.foodlist (
     foodlistID SERIAL PRIMARY KEY,
     foodlistName VARCHAR(100),
-    foodlistTime TIME,
+    foodlistTime VARCHAR(20),
     foodlistDay VARCHAR(20),
     foodlistCurrIdx INTEGER
 );
 
 CREATE TABLE foodloop.restaurant (
     restaurantID SERIAL PRIMARY KEY,
-    restaurantName VARCHAR(50),
-    descriptions VARCHAR(250)
+    restaurantName VARCHAR(50)
 );
 
 CREATE TABLE foodloop.food (
     foodID SERIAL PRIMARY KEY,
     foodName VARCHAR(50),
-    descriptions VARCHAR(250)
+    descriptions VARCHAR(250),
+    category VARCHAR(20)
 );
 
 CREATE TABLE foodloop.tag (
@@ -72,18 +72,6 @@ CREATE TABLE foodloop.restaurantToFood (
     CONSTRAINT fk_food
         FOREIGN KEY (foodID)
             REFERENCES foodloop.food(foodID)
-);
-
-CREATE TABLE foodloop.restaurantToTag (
-    restaurantID INT,
-    tagID INT,
-    PRIMARY KEY (restaurantID, tagID),
-    CONSTRAINT fk_restaurant
-        FOREIGN KEY (restaurantID)
-            REFERENCES foodloop.restaurant(restaurantID),
-    CONSTRAINT fk_tag
-        FOREIGN KEY (tagID)
-            REFERENCES foodloop.tag(tagID)
 );
 
 CREATE TABLE foodloop.foodToTag (
