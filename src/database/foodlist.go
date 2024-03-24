@@ -130,6 +130,7 @@ func GetAllForUser(userID string) ([]models.Foodlist, error) {
 			&foodlist.FoodlistTime,
 			&foodlist.FoodlistDay,
 			&foodlist.FoodlistCurrIdx,
+			&foodlist.FoodlistCategory,
 		); err != nil {
 			fmt.Println(err)
 		}
@@ -165,6 +166,7 @@ func GetFoodlist(userID string, foodlistID string) (models.Foodlist, error) {
 			&foodlist.FoodlistTime,
 			&foodlist.FoodlistDay,
 			&foodlist.FoodlistCurrIdx,
+			&foodlist.FoodlistCategory,
 		); err != nil {
 			return models.Foodlist{}, err
 		}
