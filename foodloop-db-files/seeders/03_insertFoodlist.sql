@@ -1,3 +1,3 @@
-INSERT INTO foodloop.foodlist (foodlistName, foodlistTime, foodlistDay, foodlistCurrIdx, foodlistCategory) VALUES ('chicken rice', '12:00', 'Monday', 1, "chicken rice");
-INSERT INTO foodloop.foodlist (foodlistName, foodlistTime, foodlistDay, foodlistCurrIdx, foodlistCategory) VALUES ('pasta', '12:30', 'Tuesday', 1, "pasta");
-INSERT INTO foodloop.foodlist (foodlistName, foodlistTime, foodlistDay, foodlistCurrIdx, foodlistCategory) VALUES ('biryani', '18:00', 'Wednesday', 1, "biryani");
+INSERT INTO foodloop.foodlist (foodlistName, foodlistTime, foodlistDay, foodlistCurrIdx, foodlistCategory) VALUES ('chicken rice', '12:00', 'Monday', 1, 'chicken rice');
+INSERT INTO foodloop.foodlist (foodlistName, foodlistTime, foodlistDay, foodlistCurrIdx, foodlistCategory) VALUES ('pasta', '12:30', 'Tuesday', 1, 'pasta');
+INSERT INTO foodloop.foodlist (foodlistName, foodlistTime, foodlistDay, foodlistCurrIdx, foodlistCategory) VALUES ('biryani', '18:00', 'Wednesday', 1, 'biryani');
