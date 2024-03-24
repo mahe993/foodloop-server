@@ -23,13 +23,13 @@ CREATE TABLE foodloop.foodlist (
 CREATE TABLE foodloop.restaurant (
     restaurantID SERIAL PRIMARY KEY,
     restaurantName VARCHAR(50),
-    descriptions VARCHAR(250)
 );
 
 CREATE TABLE foodloop.food (
     foodID SERIAL PRIMARY KEY,
     foodName VARCHAR(50),
-    descriptions VARCHAR(250)
+    descriptions VARCHAR(250),
+    category VARCHAR(20)
 );
 
 CREATE TABLE foodloop.tag (
