@@ -15,7 +15,7 @@ CREATE TABLE foodloop.people (
 CREATE TABLE foodloop.foodlist (
     foodlistID SERIAL PRIMARY KEY,
     foodlistName VARCHAR(100),
-    foodlistTime TIME,
+    foodlistTime VARCHAR(20),
     foodlistDay VARCHAR(20),
     foodlistCurrIdx INTEGER
 );
