@@ -6,7 +6,7 @@ import (
 
 func GetFoods(foodlistID string) ([]models.Food, error) {
 	rows, err := db.Query(`
-    SELECT f.foodID, f.foodName, f.descriptions, fftf.foodIndex
+    SELECT f.foodID, f.foodName, f.descriptions, f.category, fftf.foodIndex
     FROM foodloop.food f
     JOIN foodloop.foodlistToFood fftf ON f.foodID = fftf.foodID
     WHERE fftf.foodlistID = $1;
@@ -23,6 +23,7 @@ func GetFoods(foodlistID string) ([]models.Food, error) {
 			&food.FoodID,
 			&food.FoodName,
 			&food.Descriptions,
+			&food.Category,
 			&food.FoodIndex,
 		); err != nil {
 			return nil, err
