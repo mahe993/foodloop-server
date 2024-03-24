@@ -6,7 +6,6 @@ type Foodlist struct {
 	FoodlistTime    string `json:"foodlistTime"`
 	FoodlistDay     string `json:"foodlistDay"`
 	FoodlistCurrIdx int    `json:"foodlistCurrIdx"`
-	Foodlist        []Food
 }
 
 type Food struct {
@@ -14,4 +13,16 @@ type Food struct {
 	FoodName     string `json:"foodName"`
 	Descriptions string `json:"descriptions"`
 	FoodIndex    int    `json:"foodIndex"`
+}
+
+type CreateFoodlistRequest struct {
+	Query string `json:"query"`
+	Title string `json:"title"`
+	Day   string `json:"recurringDay"`
+	Time  string `json:"recurringTime"`
+}
+
+type GetFoodlistResponse struct {
+	Foodlist Foodlist `json:"foodlist"`
+	Foods    []Food   `json:"foods"`
 }

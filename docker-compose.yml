@@ -1,10 +1,10 @@
-version: '3.8'
+version: "3.8"
 services:
   foodloop-postgres:
     image: "postgres:16.1-alpine"
     container_name: foodloop-postgres
     volumes:
-      - ./foodloop-data:/var/lib/postgresql/data
+      - ./foodloop-data:/lib/postgresql/data
       - ./foodloop-db-files/01_schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
       - ./foodloop-db-files/seeders/02_insertPeople.sql:/docker-entrypoint-initdb.d/02_insertPeople.sql
       - ./foodloop-db-files/seeders/03_insertFoodlist.sql:/docker-entrypoint-initdb.d/03_insertFoodlist.sql
@@ -27,7 +27,7 @@ services:
       PGUSER: ${POSTGRES_USER}
       PGDATABASE: ${POSTGRES_DB}
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready" ]
+      test: ["CMD-SHELL", "pg_isready"]
       interval: 5s
       timeout: 5s
       retries: 5

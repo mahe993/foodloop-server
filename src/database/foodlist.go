@@ -48,20 +48,28 @@ func GenerateFoodlist(tags []string) ([]models.Food, error) {
 	return res, nil
 }
 
-func InsertFoodlist(id int, list []models.Food, title string, time string, day string) error {
-	var newID int64
-	if err := db.QueryRow(
+func InsertFoodlist(id int, list []models.Food, title string, time string, day string) (models.Foodlist, error) {
+	r := db.QueryRow(
 		`
 		INSERT INTO foodloop.foodlist(foodlistName, foodlistTime, foodlistDay, foodlistCurrIdx)
 		VALUES($1, $2, $3, $4)
-		RETURNING foodlistID
+		RETURNING *
 		`,
 		title,
 		time,
 		day,
 		0,
-	).Scan(&newID); err != nil {
-		return err
+	)
+
+	var foodlist models.Foodlist
+	if err := r.Scan(
+		&foodlist.FoodlistID,
+		&foodlist.FoodlistName,
+		&foodlist.FoodlistTime,
+		&foodlist.FoodlistDay,
+		&foodlist.FoodlistCurrIdx,
+	); err != nil {
+		return models.Foodlist{}, err
 	}
 
 	if _, err := db.Exec(
@@ -70,23 +78,23 @@ func InsertFoodlist(id int, list []models.Food, title string, time string, day s
 		VALUES($1, $2)
 		`,
 		id,
-		newID,
+		foodlist.FoodlistID,
 	); err != nil {
-		return err
+		return models.Foodlist{}, err
 	}
 
 	stmt := "INSERT INTO foodloop.foodlistToFood(foodlistID, foodID, foodIndex) VALUES"
 	for i, v := range list {
-		stmt += fmt.Sprintf("(%d, %d, %d),", newID, v.FoodID, i+1)
+		stmt += fmt.Sprintf("(%d, %d, %d),", foodlist.FoodlistID, v.FoodID, i+1)
 	}
 	stmt = stmt[0 : len(stmt)-1]
 	if _, err := db.Exec(
 		stmt,
 	); err != nil {
-		return err
+		return models.Foodlist{}, err
 	}
 
-	return nil
+	return foodlist, nil
 }
 
 func GetAllForUser(userID string) ([]models.Foodlist, error) {
@@ -150,52 +158,8 @@ func GetFoodlist(userID string, foodlistID string) (models.Foodlist, error) {
 			&foodlist.FoodlistDay,
 			&foodlist.FoodlistCurrIdx,
 		); err != nil {
-			fmt.Println(err)
-		}
-	}
-
-	rows, err = db.Query(
-		`
-		SELECT f.foodID, f.foodName, f.descriptions, ftf.foodIndex
-		FROM foodloop.people p 
-		LEFT JOIN foodloop.peopleToFoodlist ptf 
-		ON p.peopleid = ptf.peopleid 
-		LEFT JOIN foodlistToFood ftf 
-		ON ptf.foodlistid = ftf.foodlistid 
-		LEFT JOIN food f 
-		ON ftf.foodid = f.foodid 
-		LEFT JOIN restaurantToFood rtf 
-		ON rtf.foodid = f.foodid 
-		LEFT JOIN restaurant r 
-		ON r.restaurantid = rtf.restaurantid
-		WHERE p.peopleid = $1
-		AND ptf.foodlistid = $2
-		ORDER BY ftf.foodIndex ASC
-		`,
-		userID,
-		foodlistID,
-	)
-	if err != nil {
-		fmt.Println(err)
-		return models.Foodlist{}, err
-	}
-
-	foods := []models.Food{}
-	for rows.Next() {
-		food := models.Food{}
-		if err := rows.Scan(
-			&food.FoodID,
-			&food.FoodName,
-			&food.Descriptions,
-			&food.FoodIndex,
-		); err != nil {
-			fmt.Println(err)
 			return models.Foodlist{}, err
 		}
-		foods = append(foods, food)
 	}
-
-	foodlist.Foodlist = foods
 	return foodlist, nil
-
 }
