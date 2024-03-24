@@ -83,10 +83,10 @@ func (*FoodlistService) GetFoodlist(w http.ResponseWriter, r *http.Request) {
 	foodlistID := r.Context().Value("foodlistID").(string)
 	userID := r.Context().Value("userID").(string)
 	var (
-		joinedErr error
-		foodlist  models.Foodlist
-		foods     []models.Food
-		wg        sync.WaitGroup
+		foodlist              models.Foodlist
+		foods                 []models.Food
+		foodlistErr, foodsErr error
+		wg                    sync.WaitGroup
 	)
 
 	wg.Add(2)
@@ -95,7 +95,7 @@ func (*FoodlistService) GetFoodlist(w http.ResponseWriter, r *http.Request) {
 
 		fl, err := database.GetFoodlist(userID, foodlistID)
 		if err != nil {
-			errors.Join(joinedErr, err)
+			foodlistErr = err
 			return
 		}
 		foodlist = fl
@@ -106,16 +106,17 @@ func (*FoodlistService) GetFoodlist(w http.ResponseWriter, r *http.Request) {
 
 		f, err := database.GetFoods(foodlistID)
 		if err != nil {
-			errors.Join(joinedErr, err)
+			foodsErr = err
 			return
 		}
 		foods = f
 	}()
 
 	wg.Wait()
-	if joinedErr != nil {
+	err := errors.Join(foodlistErr, foodsErr)
+	if err != nil {
 		render.Status(r, http.StatusBadRequest)
-		render.JSON(w, r, joinedErr.Error())
+		render.JSON(w, r, err.Error())
 		return
 	}
 
