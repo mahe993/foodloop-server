@@ -22,7 +22,7 @@ CREATE TABLE foodloop.foodlist (
 
 CREATE TABLE foodloop.restaurant (
     restaurantID SERIAL PRIMARY KEY,
-    restaurantName VARCHAR(50),
+    restaurantName VARCHAR(50)
 );
 
 CREATE TABLE foodloop.food (

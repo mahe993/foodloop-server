@@ -42,7 +42,7 @@ INSERT INTO foodloop.restaurant(restaurantName) VALUES ('Hainanese Delights Menu
 INSERT INTO foodloop.restaurant(restaurantName) VALUES ('Chicken Rice Express Menu');
 INSERT INTO foodloop.restaurant(restaurantName) VALUES ('Chicky Chicky Rice House Menu');
 INSERT INTO foodloop.restaurant(restaurantName) VALUES ('Chicken Master Kitchen Menu');
-INSERT INTO foodloop.restaurant(restaurantName) VALUES ('Rice 'n' Chicken Haven Menu');
+INSERT INTO foodloop.restaurant(restaurantName) VALUES ('Rice ''n'' Chicken Haven Menu');
 INSERT INTO foodloop.restaurant(restaurantName) VALUES ('Cluck Cluck Chicken Rice Corner Menu');
 INSERT INTO foodloop.restaurant(restaurantName) VALUES ('Savory Chicken Rice Delight Menu');
 INSERT INTO foodloop.restaurant(restaurantName) VALUES ('Chicken Rice Palace Menu');
