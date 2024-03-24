@@ -45,7 +45,7 @@ func (*FoodlistService) CreateFoodlist(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	tags := cleanQuery(req.Query)
-	foods, err := database.GenerateFoodlist(tags)
+	foods, err := database.GenerateFoods(tags)
 	if err != nil {
 		render.Status(r, http.StatusBadRequest)
 		render.JSON(w, r, err.Error())
