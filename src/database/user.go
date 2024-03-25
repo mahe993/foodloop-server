@@ -50,3 +50,27 @@ func GetAllUsers() ([]models.User, error) {
 
 	return users, nil
 }
+
+func CreateUser(name string) (models.User, error) {
+	rows, err := db.Query(`
+	INSERT INTO foodloop.people (name)
+	VALUES ($1)
+	RETURNING *;
+`, name)
+	if err != nil {
+		return models.User{}, err
+	}
+	defer rows.Close()
+
+	user := models.User{}
+	for rows.Next() {
+		if err := rows.Scan(
+			&user.UserID,
+			&user.Username,
+		); err != nil {
+			return models.User{}, err
+		}
+	}
+
+	return user, nil
+}
