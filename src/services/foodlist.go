@@ -20,11 +20,14 @@ type FoodlistService struct{}
 var Foodlist FoodlistService
 
 func cleanQuery(s string) []string {
+	var cleanedTags []string
+	if strings.Contains(s, "chicken rice") {
+		cleanedTags = append(cleanedTags, "chicken rice")
+		s = strings.Replace(s, "chicken rice", "", -1)
+	}
 	cleanContent := stopwords.CleanString(s, "en", true)
 	tags := strings.Split(cleanContent, " ")
-	if strings.Contains(s, "chicken rice") || strings.Contains(s, "chicken rices") {
-		tags = append(tags, "chicken rice")
-	}
+
 	cat := map[string]string{
 		"burgers":  "burger",
 		"pastas":   "pasta",
@@ -36,7 +39,9 @@ func cleanQuery(s string) []string {
 			tags[i] = val
 		}
 	}
-	return tags[:len(tags)-1]
+	cleanedTags = append(cleanedTags, tags...)
+
+	return cleanedTags[:len(cleanedTags)-1]
 }
 
 func (*FoodlistService) CreateFoodlist(w http.ResponseWriter, r *http.Request) {
