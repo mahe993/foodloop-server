@@ -22,8 +22,19 @@ var Foodlist FoodlistService
 func cleanQuery(s string) []string {
 	cleanContent := stopwords.CleanString(s, "en", true)
 	tags := strings.Split(cleanContent, " ")
-	if strings.Contains(s, "chicken rice") {
+	if strings.Contains(s, "chicken rice") || strings.Contains(s, "chicken rices") {
 		tags = append(tags, "chicken rice")
+	}
+	cat := map[string]string{
+		"burgers":  "burger",
+		"pastas":   "pasta",
+		"biryanis": "biryani",
+		"laksas":   "laksa",
+	}
+	for i, tag := range tags {
+		if val, ok := cat[tag]; ok {
+			tags[i] = val
+		}
 	}
 	return tags[:len(tags)-1]
 }
