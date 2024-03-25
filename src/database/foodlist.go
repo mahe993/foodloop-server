@@ -14,7 +14,7 @@ func InsertFoodlist(id int, list []models.Food, time string, day string) (models
 	r := db.QueryRow(
 		`
 		INSERT INTO foodloop.foodlist(foodlistName, foodlistTime, foodlistDay, foodlistCurrIdx, foodlistCategory, foodlistStatus)
-		VALUES($1, $2, $3, $4, $5)
+		VALUES($1, $2, $3, $4, $5, $6)
 		RETURNING *
 		`,
 		list[0].Category,
