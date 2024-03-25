@@ -127,3 +127,29 @@ func (*FoodlistService) GetFoodlist(w http.ResponseWriter, r *http.Request) {
 
 	render.JSON(w, r, res)
 }
+
+func (*FoodlistService) UpdateFoodlistStatus(w http.ResponseWriter, r *http.Request) {
+	foodlistID := r.Context().Value("foodlistID").(string)
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		render.Status(r, http.StatusBadRequest)
+		render.JSON(w, r, err.Error())
+		return
+	}
+
+	var req models.UpdateFoodlistStatusRequest
+	err = json.Unmarshal(body, &req)
+	if err != nil {
+		render.Status(r, http.StatusBadRequest)
+		render.JSON(w, r, err.Error())
+		return
+	}
+
+	err = database.UpdateFoodlistStatus(foodlistID, req.Status)
+	if err != nil {
+		render.Status(r, http.StatusBadRequest)
+		render.JSON(w, r, err.Error())
+		return
+	}
+	render.JSON(w, r, "success")
+}

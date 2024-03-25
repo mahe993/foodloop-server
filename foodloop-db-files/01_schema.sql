@@ -18,7 +18,8 @@ CREATE TABLE foodloop.foodlist (
     foodlistTime VARCHAR(20),
     foodlistDay VARCHAR(20),
     foodlistCurrIdx INTEGER,
-    foodlistCategory VARCHAR(20)
+    foodlistCategory VARCHAR(20),
+    foodlistStatus VARCHAR(10) CHECK (foodlistStatus IN ('play', 'pause'))
 );
 
 CREATE TABLE foodloop.restaurant (

@@ -13,7 +13,7 @@ func InsertFoodlist(id int, list []models.Food, time string, day string) (models
 
 	r := db.QueryRow(
 		`
-		INSERT INTO foodloop.foodlist(foodlistName, foodlistTime, foodlistDay, foodlistCurrIdx, foodlistCategory)
+		INSERT INTO foodloop.foodlist(foodlistName, foodlistTime, foodlistDay, foodlistCurrIdx, foodlistCategory, foodlistStatus)
 		VALUES($1, $2, $3, $4, $5)
 		RETURNING *
 		`,
@@ -22,6 +22,7 @@ func InsertFoodlist(id int, list []models.Food, time string, day string) (models
 		day,
 		0,
 		list[0].Category,
+		"play",
 	)
 
 	var foodlist models.Foodlist
@@ -32,6 +33,7 @@ func InsertFoodlist(id int, list []models.Food, time string, day string) (models
 		&foodlist.FoodlistDay,
 		&foodlist.FoodlistCurrIdx,
 		&foodlist.FoodlistCategory,
+		&foodlist.FoodlistStatus,
 	); err != nil {
 		return models.Foodlist{}, err
 	}
@@ -87,6 +89,7 @@ func GetAllForUser(userID string) ([]models.Foodlist, error) {
 			&foodlist.FoodlistDay,
 			&foodlist.FoodlistCurrIdx,
 			&foodlist.FoodlistCategory,
+			&foodlist.FoodlistStatus,
 		); err != nil {
 			fmt.Println(err)
 		}
@@ -123,9 +126,26 @@ func GetFoodlist(userID string, foodlistID string) (models.Foodlist, error) {
 			&foodlist.FoodlistDay,
 			&foodlist.FoodlistCurrIdx,
 			&foodlist.FoodlistCategory,
+			&foodlist.FoodlistStatus,
 		); err != nil {
 			return models.Foodlist{}, err
 		}
 	}
 	return foodlist, nil
+}
+
+func UpdateFoodlistStatus(id string, status string) error {
+	// Construct the UPDATE query
+	query := `
+        UPDATE foodloop.foodlist
+        SET foodlistStatus = $1
+        WHERE foodlistID = $2
+    `
+	// Execute the update query
+	_, err := db.Exec(query, status, id)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
