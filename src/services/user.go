@@ -1,9 +1,11 @@
 package services
 
 import (
+	"encoding/json"
+	"foodloop/src/database"
 	"foodloop/src/models"
+	"io"
 	"net/http"
-	"strconv"
 
 	"github.com/go-chi/render"
 )
@@ -13,32 +15,50 @@ type UserService struct{}
 var User UserService
 
 func (*UserService) GetAll(w http.ResponseWriter, r *http.Request) {
-	users := []models.User{
-		{UserID: 1, Username: "user1", Password: "123"},
-		{UserID: 2, Username: "user2", Password: "123"},
-		{UserID: 3, Username: "user3", Password: "123"},
+	users, err := database.GetAllUsers()
+	if err != nil {
+		render.Status(r, http.StatusBadRequest)
+		render.JSON(w, r, err.Error())
+		return
 	}
+
 	render.JSON(w, r, users)
 }
 
 func (*UserService) GetUser(w http.ResponseWriter, r *http.Request) {
-	users := []models.User{
-		{UserID: 1, Username: "user1"},
-		{UserID: 2, Username: "user2"},
-		{UserID: 3, Username: "user3"},
-	}
-
 	id := r.Context().Value("userID").(string)
-	idInt, err := strconv.Atoi(id)
+	user, err := database.GetUser(id)
 	if err != nil {
-		render.Respond(w, r, err)
+		render.Status(r, http.StatusBadRequest)
+		render.JSON(w, r, err.Error())
+		return
 	}
 
-	for _, user := range users {
-		if user.UserID == idInt {
-			render.JSON(w, r, user)
-			return
-		}
+	render.JSON(w, r, user)
+}
+
+func (*UserService) CreateUser(w http.ResponseWriter, r *http.Request) {
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		render.Status(r, http.StatusBadRequest)
+		render.JSON(w, r, err.Error())
+		return
 	}
-	render.Respond(w, r, "User not found")
+
+	var req models.CreateUserRequest
+	err = json.Unmarshal(body, &req)
+	if err != nil {
+		render.Status(r, http.StatusBadRequest)
+		render.JSON(w, r, err.Error())
+		return
+	}
+
+	user, err := database.CreateUser(req.Name)
+	if err != nil {
+		render.Status(r, http.StatusBadRequest)
+		render.JSON(w, r, err.Error())
+		return
+	}
+
+	render.JSON(w, r, user)
 }

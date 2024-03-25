@@ -19,6 +19,7 @@ func (*UserRouter) Router() chi.Router {
 	r := chi.NewRouter()
 
 	r.Get("/", services.User.GetAll)
+	r.Post("/", services.User.CreateUser)
 
 	r.Route("/{id}", func(r chi.Router) {
 		r.Use(User.IDCtx)
