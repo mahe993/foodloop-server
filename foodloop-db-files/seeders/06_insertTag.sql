@@ -85,3 +85,4 @@ INSERT INTO foodloop.tag(tagName) VALUES ('hard-boiled');
 INSERT INTO foodloop.tag(tagName) VALUES ('complemented');
 INSERT INTO foodloop.tag(tagName) VALUES ('onion');
 INSERT INTO foodloop.tag(tagName) VALUES ('spicy');
+INSERT INTO foodloop.tag(tagName) VALUES ('burger');
