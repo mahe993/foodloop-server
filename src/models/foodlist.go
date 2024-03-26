@@ -33,3 +33,7 @@ type GetFoodlistResponse struct {
 type UpdateFoodlistStatusRequest struct {
 	Status string `json:"status"`
 }
+
+type UpdateFoodlistIndexRequest struct {
+	Index int `json:"index"`
+}
