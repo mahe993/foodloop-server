@@ -20,7 +20,7 @@ func InsertFoodlist(id int, list []models.Food, time string, day string) (models
 		list[0].Category,
 		time,
 		day,
-		0,
+		1,
 		list[0].Category,
 		"play",
 	)
@@ -134,15 +134,68 @@ func GetFoodlist(userID string, foodlistID string) (models.Foodlist, error) {
 	return foodlist, nil
 }
 
-func UpdateFoodlistStatus(id string, status string) error {
+func UpdateFoodlistStatus(id string, status string) (models.Foodlist, error) {
 	// Construct the UPDATE query
 	query := `
         UPDATE foodloop.foodlist
         SET foodlistStatus = $1
         WHERE foodlistID = $2
+		RETURNING *
     `
-	// Execute the update query
-	_, err := db.Exec(query, status, id)
+	foodlist := models.Foodlist{}
+	err := db.QueryRow(query, status, id).Scan(
+		&foodlist.FoodlistID,
+		&foodlist.FoodlistName,
+		&foodlist.FoodlistTime,
+		&foodlist.FoodlistDay,
+		&foodlist.FoodlistCurrIdx,
+		&foodlist.FoodlistCategory,
+		&foodlist.FoodlistStatus,
+	)
+	if err != nil {
+		return models.Foodlist{}, err
+	}
+
+	return foodlist, nil
+}
+
+func UpdateFoodlistIndex(id string, index int) (models.Foodlist, error) {
+	// Construct the UPDATE query
+	query := `
+        UPDATE foodloop.foodlist
+        SET foodlistCurrIdx = $1
+        WHERE foodlistID = $2
+		RETURNING *
+
+    `
+	foodlist := models.Foodlist{}
+	err := db.QueryRow(query, index, id).Scan(
+		&foodlist.FoodlistID,
+		&foodlist.FoodlistName,
+		&foodlist.FoodlistTime,
+		&foodlist.FoodlistDay,
+		&foodlist.FoodlistCurrIdx,
+		&foodlist.FoodlistCategory,
+		&foodlist.FoodlistStatus,
+	)
+	if err != nil {
+		return models.Foodlist{}, err
+	}
+
+	return foodlist, nil
+}
+
+func DeleteFoodlist(id string) error {
+	// delete all related cronjobs
+	// cascade delete from other tables
+
+	_, err := db.Exec(
+		`
+		DELETE FROM foodloop.foodlist
+		WHERE foodlistID = $1
+	`,
+		id,
+	)
 	if err != nil {
 		return err
 	}

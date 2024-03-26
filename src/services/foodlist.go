@@ -85,14 +85,14 @@ func (*FoodlistService) CreateFoodlist(w http.ResponseWriter, r *http.Request) {
 func (*FoodlistService) GetAllForUser(w http.ResponseWriter, r *http.Request) {
 	userID := r.Context().Value("userID").(string)
 
-	foodlist, err := database.GetAllForUser(userID)
+	foodlists, err := database.GetAllForUser(userID)
 	if err != nil {
 		render.Status(r, http.StatusBadRequest)
 		render.JSON(w, r, err.Error())
 		return
 	}
 
-	render.JSON(w, r, foodlist)
+	render.JSON(w, r, foodlists)
 }
 
 func (*FoodlistService) GetFoodlist(w http.ResponseWriter, r *http.Request) {
@@ -161,11 +161,59 @@ func (*FoodlistService) UpdateFoodlistStatus(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	err = database.UpdateFoodlistStatus(foodlistID, req.Status)
+	f, err := database.UpdateFoodlistStatus(foodlistID, req.Status)
 	if err != nil {
 		render.Status(r, http.StatusBadRequest)
 		render.JSON(w, r, err.Error())
 		return
 	}
-	render.JSON(w, r, "success")
+	render.JSON(w, r, f)
+}
+
+func (*FoodlistService) UpdateFoodlistIndex(w http.ResponseWriter, r *http.Request) {
+	foodlistID := r.Context().Value("foodlistID").(string)
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		render.Status(r, http.StatusBadRequest)
+		render.JSON(w, r, err.Error())
+		return
+	}
+
+	var req models.UpdateFoodlistIndexRequest
+	err = json.Unmarshal(body, &req)
+	if err != nil {
+		render.Status(r, http.StatusBadRequest)
+		render.JSON(w, r, err.Error())
+		return
+	}
+
+	f, err := database.UpdateFoodlistIndex(foodlistID, req.Index)
+	if err != nil {
+		render.Status(r, http.StatusBadRequest)
+		render.JSON(w, r, err.Error())
+		return
+	}
+	render.JSON(w, r, f)
+}
+
+func (*FoodlistService) DeleteFoodlist(w http.ResponseWriter, r *http.Request) {
+	foodlistID := r.Context().Value("foodlistID").(string)
+	userID := r.Context().Value("userID").(string)
+
+	err := database.DeleteFoodlist(foodlistID)
+	if err != nil {
+		render.Status(r, http.StatusBadRequest)
+		render.JSON(w, r, err.Error())
+		return
+	}
+
+	foodlists, err := database.GetAllForUser(userID)
+	if err != nil {
+		render.Status(r, http.StatusBadRequest)
+		render.JSON(w, r, err.Error())
+		return
+	}
+
+	render.JSON(w, r, foodlists)
+
 }
