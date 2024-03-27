@@ -53,7 +53,8 @@ func GetFoods(foodlistID string) ([]models.Food, error) {
     SELECT f.foodID, f.foodName, f.descriptions, f.category, fftf.foodIndex
     FROM foodloop.food f
     JOIN foodloop.foodlistToFood fftf ON f.foodID = fftf.foodID
-    WHERE fftf.foodlistID = $1;
+    WHERE fftf.foodlistID = $1
+	ORDER BY fftf.foodIndex;
 `, foodlistID)
 	if err != nil {
 		return nil, err

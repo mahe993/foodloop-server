@@ -25,6 +25,9 @@ func (*FoodlistRouter) Router() chi.Router {
 		r.Route("/{id}", func(r chi.Router) {
 			r.Use(Foodlist.GetUserIDAndFoodlistID)
 			r.Get("/", services.Foodlist.GetFoodlist)
+			r.Put("/status", services.Foodlist.UpdateFoodlistStatus)
+			r.Put("/index", services.Foodlist.UpdateFoodlistIndex)
+			r.Delete("/", services.Foodlist.DeleteFoodlist)
 		})
 	})
 
