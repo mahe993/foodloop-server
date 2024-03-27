@@ -32,7 +32,7 @@ const (
 
 func main() {
 	if err := godotenv.Load(); err != nil {
-		log.Print("No .env file found", err)
+		log.Print("No .env file found: ", err)
 	}
 	database.InitDB()
 	defer database.CloseDB()

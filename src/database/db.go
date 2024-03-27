@@ -12,7 +12,8 @@ var db *sql.DB
 
 func InitDB() {
 	connStr := fmt.Sprintf(
-		"user=%s password=%s dbname=%s sslmode=disable",
+		"host=%s user=%s password=%s dbname=%s sslmode=disable",
+		os.Getenv("POSTGRES_HOST"),
 		os.Getenv("POSTGRES_USER"),
 		os.Getenv("POSTGRES_PASSWORD"),
 		os.Getenv("POSTGRES_DB"),
