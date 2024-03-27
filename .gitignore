@@ -28,3 +28,5 @@ go.work
 
 #volume for local db data
 foodloop-data
+
+*seedprod.sh
