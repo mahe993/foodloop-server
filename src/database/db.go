@@ -19,6 +19,10 @@ func InitDB() {
 		os.Getenv("POSTGRES_DB"),
 	)
 
+	if os.Getenv("ENVIRONMENT") == "production" {
+		connStr = os.Getenv("DATABASE_URL")
+	}
+
 	dbConn, err := sql.Open("postgres", connStr)
 	if err != nil {
 		panic(err)
