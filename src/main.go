@@ -42,7 +42,7 @@ func main() {
 	// Basic CORS
 	r.Use(cors.Handler(cors.Options{
 		// TODO: change example.com to FE domain once deployed
-		AllowedOrigins:   []string{"http://localhost:5173"},
+		AllowedOrigins:   []string{"http://localhost:5173", "https://foodloop-6zox.onrender.com"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"*"},
 		AllowCredentials: false,
